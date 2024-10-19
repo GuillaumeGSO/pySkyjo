@@ -57,15 +57,16 @@ class ActionSwapWithHighest(Action):
     
 
 class Player():
-    def __init__(self, name: str):
-        self.name: str = name
+    def __init__(self, id: int):
+        self.id: int = id
+        self.name: str = f"Player{id}"
         self.cards: List[Card] = []    # List of cards the player holds
         self.score: int = 0            # Player's score
         self.strategies = [ActionDiscardAndReturnRandom(), ActionSwapWithTarget(), ActionSwapWithHighest()]
         self.current_strategy: Action = None
     
     def __repr__(self) -> str:
-        return f"Player(name='{self.name}', cards={len(self.cards)}, score={self.score})"
+        return f"Player(id='{self.id}', cards={len(self.cards)}, score={self.score})"
     
     def sum_cards_value(self):
         return sum(card.value for card in self.cards)

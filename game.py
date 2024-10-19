@@ -17,7 +17,7 @@ class Game:
         self.init_game()
 
     def generate_players(self) -> List[Player]:
-        return [Player("Player" + str(p)) for p in range(self.number_players)]
+        return [Player(p) for p in range(self.number_players)]
 
     def reorder_players(self, start_player: Player) -> List[Player]:
         if start_player not in self.players:
@@ -28,8 +28,8 @@ class Game:
 
     def generate_deck(self) -> List[Card]:
         listOfCards = [x for x in range(-2, 13)]
-        deck = listOfCards * 10  # Create the deck
-        random.shuffle(deck)  # Shuffle the deck
+        deck = listOfCards * 10
+        random.shuffle(deck)
         return [Card(value) for value in deck]
 
     def init_game(self):
@@ -56,7 +56,7 @@ class Game:
 
     def update_scores(self):
         round_finisher = self.get_round_finisher()
-        minimal_scorers = self.get_round_min_scorer()
+        minimal_scorers = self.get_round_min_scorers()
         for player in self.players:
             player.score += player.sum_cards_value()
             if player == round_finisher and not (player in minimal_scorers):
@@ -71,7 +71,7 @@ class Game:
                 return player
         return None
     
-    def get_round_min_scorer(self) -> List[Player]:
+    def get_round_min_scorers(self) -> List[Player]:
         min_score = float('inf')
         min_scorers = []
         #Search minimal score
@@ -90,14 +90,14 @@ class Game:
 
     def get_game_winner(self) -> Optional[Player]:
         if self.is_game_over():
-            return self.get_min_score(self.players)
+            return self.get_min_scorer(self.players)
         return None
     
-    def get_min_score(self,players: List[Player]) -> Player:
+    def get_min_scorer(self,players: List[Player]) -> Player:
         return min(players, key=lambda player: player.score)
     
     def is_game_over(self) -> bool:
-        return any(player.score >= 1000 for player in self.players)
+        return any(player.score >= 100 for player in self.players)
 
 
                
